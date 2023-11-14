@@ -21,6 +21,7 @@ const Signup = () => {
 
   console.log(errors);
 
+  // lưa dữ liệu người dùng vào data
   const onSubmitForm = async (data) => {
     try {
       const response = await fetch("http://localhost:6060/signup", {
@@ -76,7 +77,7 @@ const Signup = () => {
                   })}
                   type="text"
                   name="name"
-                  className="block py-1 w-full mt-1 border-gray-300 rounded-md shadow-sm focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50"
+                  className="block w-full px-4 py-2 mt-2 text-emerald-700 bg-white border rounded-md focus:border-emerald-400 focus:ring-emerald-300 focus:outline-none focus:ring focus:ring-opacity-40"
                   placeholder="Họ Và Tên"
                 />
                 <p>
@@ -86,10 +87,10 @@ const Signup = () => {
                 </p>
               </div>
             </div>
-            <div className="mt-4">
+            <div className="mt-2">
               <label
                 htmlFor="phone"
-                className="block text-sm font-medium text-gray-700 undefined text-start"
+                className="block text-sm  font-medium text-gray-700 undefined text-start"
               >
                 Số Điện Thoại
               </label>
@@ -104,7 +105,7 @@ const Signup = () => {
                   })}
                   type="number"
                   name="phone"
-                  className="block w-full mt-1 py-1 border-gray-300 rounded-md shadow-sm focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50"
+                  className="block w-full px-4 py-2 mt-2 text-emerald-700 bg-white border rounded-md focus:border-emerald-400 focus:ring-emerald-300 focus:outline-none focus:ring focus:ring-opacity-40"
                   placeholder="Phone"
                 />
                 <p>
@@ -114,7 +115,7 @@ const Signup = () => {
                 </p>
               </div>
             </div>
-            <div className="mt-4">
+            <div className="mt-2">
               <label
                 htmlFor="email"
                 className="block text-sm font-medium text-gray-700 undefined text-start"
@@ -128,7 +129,7 @@ const Signup = () => {
                   })}
                   type="email"
                   name="email"
-                  className="block w-full mt-1 py-1 border-gray-300 rounded-md shadow-sm focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50"
+                  className="block w-full px-4 py-2 mt-2 text-emerald-700 bg-white border rounded-md focus:border-emerald-400 focus:ring-emerald-300 focus:outline-none focus:ring focus:ring-opacity-40"
                   placeholder="Email"
                 />
                 <p>
@@ -138,7 +139,7 @@ const Signup = () => {
                 </p>
               </div>
             </div>
-            <div className="mt-4">
+            <div className="mt-2">
               <label
                 htmlFor="password"
                 className="block text-sm font-medium text-gray-700 undefined text-start"
@@ -156,7 +157,7 @@ const Signup = () => {
                   })}
                   type="password"
                   name="password"
-                  className="block w-full mt-1 py-1 border-gray-300 rounded-md shadow-sm focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50"
+                  className="block w-full px-4 py-2 mt-2 text-emerald-700 bg-white border rounded-md focus:border-emerald-400 focus:ring-emerald-300 focus:outline-none focus:ring focus:ring-opacity-40"
                   placeholder="Password"
                 />
                 <p>

@@ -3,6 +3,7 @@ import React, { useState, useEffect } from "react";
 import { Outlet } from "react-router-dom";
 
 import ComponentsHeaderHome from "./components/ComponentsHeaderHome";
+import HomePage from "./pages/HomePage";
 
 function App() {
   const [message, setMessage] = useState("");
@@ -19,7 +20,8 @@ function App() {
       <main className="pt-2 bg-slate-100 min-h-[calc(100vh)]">
         <Outlet />
       </main>
-      <h1>{message}</h1>
+      {/* <HomePage /> */}
+      {/* <h1>{message}</h1> */}
     </div>
   );
 }

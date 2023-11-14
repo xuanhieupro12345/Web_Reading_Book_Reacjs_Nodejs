@@ -47,6 +47,33 @@ app.post("/signup", async (req, res) => {
   }
 });
 
+// api login
+app.post("/login", async (req, res) => {
+  const { email, password } = req.body;
+  try {
+    const result = await userModle.findOne({
+      email: email,
+      password: password,
+    });
+    console.log(result);
+    if (result) {
+      const dataSend = {
+        id: result._id,
+        name: result.name,
+        phone: result.phone,
+        email: result.email,
+      };
+      console.log(dataSend);
+      res.send({ message: "login successfully", alert: true, data: dataSend });
+    } else {
+      res.send({ message: "check email and password", alert: false });
+    }
+  } catch (err) {
+    console.log(err);
+    res.status(500).send({ message: "an error occurred" });
+  }
+});
+
 app.get("/message", (req, res) => {
   res.json({ message: "Hello from server!" });
 });

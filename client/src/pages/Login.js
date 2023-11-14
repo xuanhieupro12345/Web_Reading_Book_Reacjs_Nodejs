@@ -1,8 +1,9 @@
 import React from "react";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { useForm } from "react-hook-form";
 
 const Login = () => {
+  const navigate = useNavigate();
   const {
     register,
     handleSubmit,
@@ -13,15 +14,39 @@ const Login = () => {
       password: "",
     },
   });
+
+  const onSubmitForm = async (data) => {
+    try {
+      const response = await fetch("http://localhost:6060/login", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify(data),
+      });
+
+      if (response.ok) {
+        const responseData = await response.json();
+        if (responseData.alert) {
+          // Dispatch your action here if needed
+          setTimeout(() => {
+            navigate("/"); // Redirect on successful login
+          }, 1000);
+        } else {
+          alert(responseData.message);
+        }
+      } else {
+        alert("check email and password");
+      }
+    } catch (error) {
+      console.error(error);
+      // Handle network errors or other issues.
+    }
+  };
   return (
     <div className="relative flex flex-col justify-center  overflow-hidden">
       <div className="w-[500px] p-6 m-auto bg-white rounded-md shadow-xl lg:max-w-xl">
-        <form
-          onSubmit={handleSubmit((date) => {
-            alert(`đăng nhập thành công`);
-            console.log(date);
-          })}
-        >
+        <form onSubmit={handleSubmit(onSubmitForm)}>
           <div className="mb-2">
             <label
               for="email"
