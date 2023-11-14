@@ -5,6 +5,7 @@ import "./index.css";
 import App from "./App";
 import reportWebVitals from "./reportWebVitals";
 import Signup from "./pages/Signup";
+import Login from "./pages/Login";
 import Home from "./pages/Home";
 import NewBook from "./pages/NewBook";
 import Rankings from "./pages/Rankings";
@@ -19,6 +20,7 @@ root.render(
       <Route path="/" element={<App />}>
         <Route index element={<Home />} />
         <Route path="signup" element={<Signup />} />
+        <Route path="login" element={<Login />} />
         <Route path="newbook" element={<NewBook />} />
         <Route path="rankings" element={<Rankings />} />
         <Route path="hotfree" element={<HotFree />} />

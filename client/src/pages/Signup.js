@@ -1,7 +1,10 @@
 import React from "react";
 import { useForm } from "react-hook-form";
+import { Link, useNavigate } from "react-router-dom";
+import { toast } from "react-hot-toast";
 
 const Signup = () => {
+  const navigate = useNavigate();
   const {
     register,
     handleSubmit,
@@ -17,16 +20,40 @@ const Signup = () => {
   });
 
   console.log(errors);
+
+  const onSubmitForm = async (data) => {
+    try {
+      const response = await fetch("http://localhost:6060/signup", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify(data),
+      });
+
+      if (response.ok) {
+        const responseData = await response.json();
+        console.log(responseData);
+        alert(responseData.message);
+
+        if (responseData.alert) {
+          navigate("/login");
+        }
+      } else {
+        const errorData = await response.json();
+        alert.error(errorData);
+        // Handle registration error, display an error message to the user.
+      }
+    } catch (error) {
+      console.error(error);
+      // Handle network errors or other issues.
+    }
+  };
   return (
     <div>
       <div className="flex flex-col items-center min-h-screen pt-6 sm:justify-center sm:pt-0 bg-gray-50">
         <div className="w-full px-6 py-4  overflow-hidden bg-white shadow-md sm:max-w-lg sm:rounded-lg">
-          <form
-            onSubmit={handleSubmit((date) => {
-              alert(`bạn đã đăng ký thành công`);
-              console.log(date);
-            })}
-          >
+          <form onSubmit={handleSubmit(onSubmitForm)}>
             <div>
               <label
                 htmlFor="name"
@@ -37,7 +64,7 @@ const Signup = () => {
               <div className="flex flex-col items-start">
                 <input
                   {...register("name", {
-                    required: "Thông tin bắc buộc !",
+                    required: "Thông tin bắt buộc !",
                     minLength: {
                       value: 7,
                       message: "Vui lòng nhập đủ họ và tên !",
@@ -69,9 +96,9 @@ const Signup = () => {
               <div className="flex flex-col items-start ">
                 <input
                   {...register("phone", {
-                    required: "Thông tin bắc buộc !",
+                    required: "Thông tin bắt buộc !",
                     minLength: {
-                      value: 8,
+                      value: 10,
                       message: "Số điện thoại không đúng !",
                     },
                   })}
@@ -97,7 +124,7 @@ const Signup = () => {
               <div className="flex flex-col items-start ">
                 <input
                   {...register("email", {
-                    required: "Thông tin bắc buộc !",
+                    required: "Thông tin bắt buộc !",
                   })}
                   type="email"
                   name="email"
@@ -121,7 +148,7 @@ const Signup = () => {
               <div className="flex flex-col items-start">
                 <input
                   {...register("password", {
-                    required: "Thông tin bắc buộc !",
+                    required: "Thông tin bắt buộc !",
                     minLength: {
                       value: 6,
                       message: "Mật Khẩu của bạn ít nhất 6 kí tự",
@@ -190,7 +217,7 @@ const Signup = () => {
             Tạo tài khoản?{" "}
             <span>
               <a className="text-emerald-300 hover:underline" href="#">
-                Đăng Nhập
+                <Link to="/login">Đăng Nhập</Link>
               </a>
             </span>
           </div>

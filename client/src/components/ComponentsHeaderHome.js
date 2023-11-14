@@ -57,7 +57,7 @@ const ComponentsHeaderHome = () => {
                   </p>
                 </button>
                 <button className="bg-emerald-600 hover:bg-emerald-700 px-2 text-gray-200">
-                  <Link to="/signup">Đăng Nhập </Link>
+                  <Link to="/login">Đăng Nhập </Link>
                 </button>
               </div>
             </div>
