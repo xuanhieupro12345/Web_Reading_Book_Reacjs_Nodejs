@@ -1,26 +1,61 @@
-import React from "react";
+import React, { useState } from "react";
 import { useForm } from "react-hook-form";
 import { BsCloudUpload } from "react-icons/bs";
-import { yupResolver } from "@hookform/resolvers/yup";
-import * as yup from "yup";
+import { Link, useNavigate } from "react-router-dom";
 
 const AddProduct = () => {
-  const schema = yup.object({
-    nameBook: yup.string().required(),
-    imageBook: yup.string().required(),
-    author: yup.string().required(),
-    category: yup.string().required(),
-    publishing: yup.string().required(),
-    updateDay: yup.string().required(),
-    description: yup.string().required(),
-  });
+  const navigate = useNavigate();
   const {
     register,
     handleSubmit,
     formState: { errors },
   } = useForm({
-    resolver: yupResolver(schema),
+    defaultValues: {
+      nameBook: "",
+      imageBook: "",
+      author: "",
+      category: "",
+      publishing: "",
+      updateDay: "",
+      description: "",
+      // confirmPassword: "",
+    },
   });
+
+  const [picture, setPicture] = useState(null);
+  const onChangePicture = (e) => {
+    setPicture(URL.createObjectURL(e.target.files[0]));
+  };
+
+  const onSubmitForm = async (data) => {
+    try {
+      const response = await fetch("http://localhost:6060/uploadProduct", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify(data),
+      });
+
+      if (response.ok) {
+        const responseData = await response.json();
+        console.log(responseData);
+        alert(responseData.message);
+
+        if (responseData.alert) {
+          navigate("/login");
+        }
+      } else {
+        const errorData = await response.json();
+        alert.error(errorData);
+        // Handle registration error, display an error message to the user.
+      }
+    } catch (error) {
+      console.error(error);
+      // Handle network errors or other issues.
+    }
+  };
+
   return (
     <div>
       <div className="flex flex-col items-center min-h-screen pt-6 sm:justify-center sm:pt-0 bg-gray-50">
@@ -28,7 +63,7 @@ const AddProduct = () => {
           <h1 className="text-3xl font-bold text-blue-600 hover:text-blue-700 mb-5 shadow mx-10 ">
             New Product
           </h1>
-          <form onSubmit={handleSubmit((data) => console.log(data))}>
+          <form onSubmit={handleSubmit(onSubmitForm)}>
             <div>
               <label
                 htmlFor="nameBook"
@@ -38,7 +73,9 @@ const AddProduct = () => {
               </label>
               <div className="flex flex-col items-start">
                 <input
-                  {...register("nameBook", {})}
+                  {...register("nameBook", {
+                    required: "thông tin bắt buộc !",
+                  })}
                   type="text"
                   name="nameBook"
                   className="block w-full px-4 py-2 mt-2  bg-slate-200  focus:border-emerald-400 focus:ring-emerald-300 focus:outline-none focus:ring focus:ring-opacity-40"
@@ -60,19 +97,26 @@ const AddProduct = () => {
                 Hình ảnh
               </label>
               <div className="h-40 w-full bg-slate-200 mt-1 rounded flex items-center justify-center cursor-pointer ">
-                {useForm.image ? (
-                  <img src={useForm.image} className="h-full" />
+                {picture ? (
+                  <img
+                    className="image w-full h-full"
+                    src={picture && picture}
+                    alt=""
+                  />
                 ) : (
                   <span className="text-5xl cursor-pointer">
                     <BsCloudUpload />
                   </span>
                 )}
                 <input
-                  {...register("imageBook", {})}
+                  {...register("imageBook", { required: true })}
+                  onChange={onChangePicture}
                   type="file"
                   name="imageBook"
                   className=""
                 />
+
+                {errors.file && <p>Please select an image</p>}
               </div>
               <p>
                 {errors.imageBook && (
@@ -119,18 +163,34 @@ const AddProduct = () => {
                   className="bg-slate-200 p-1 my-1  text-blue-600 w-full"
                   {...register("category")}
                 >
-                  <option value="female">Trinh thám - Kinh dị</option>
-                  <option value="female">Viễn tưởng - Giả tưởng</option>
-                  <option value="female">Khởi nghiệp - Làm giàu</option>
-                  <option value="female"> Marketing - Bán hàng</option>
-                  <option value="female">Quản trị - Lãnh đạo</option>
-                  <option value="female">Tài chính cá nhân</option>
-                  <option value="female">Phát triển cá nhân</option>
-                  <option value="female">
+                  <option value="Trinh thám - Kinh dị">
+                    Trinh thám - Kinh dị
+                  </option>
+                  <option value="Viễn tưởng - Giả tưởng">
+                    Viễn tưởng - Giả tưởng
+                  </option>
+                  <option value="Khởi nghiệp - Làm giàu">
+                    Khởi nghiệp - Làm giàu
+                  </option>
+                  <option value="Marketing - Bán hàng">
+                    {" "}
+                    Marketing - Bán hàng
+                  </option>
+                  <option value="Quản trị - Lãnh đạo">
+                    Quản trị - Lãnh đạo
+                  </option>
+                  <option value="Tài chính cá nhân">Tài chính cá nhân</option>
+                  <option value="Phát triển cá nhân">Phát triển cá nhân</option>
+                  <option value=" Doanh nhân - Bài học kinh doanh">
                     Doanh nhân - Bài học kinh doanh
                   </option>
-                  <option value="female">Học tập - hướng nghiệp</option>
-                  <option value="female"> Phật pháp ứng dụng</option>
+                  <option value="Học tập - hướng nghiệp">
+                    Học tập - hướng nghiệp
+                  </option>
+                  <option value="Phật pháp ứng dụng">
+                    {" "}
+                    Phật pháp ứng dụng
+                  </option>
                 </select>
                 <p>
                   {errors.category && (
@@ -151,7 +211,9 @@ const AddProduct = () => {
               </label>
               <div className="flex flex-col items-start">
                 <input
-                  {...register("publishing", {})}
+                  {...register("publishing", {
+                    required: "thông tin bắt buộc !",
+                  })}
                   type="text"
                   name="publishing"
                   className="block w-full px-4 py-2 mt-2  bg-slate-200  focus:border-emerald-400 focus:ring-emerald-300 focus:outline-none focus:ring focus:ring-opacity-40"
@@ -175,7 +237,9 @@ const AddProduct = () => {
               </label>
               <div className="flex flex-col items-start">
                 <input
-                  {...register("updateDay", {})}
+                  {...register("updateDay", {
+                    required: "thông tin bắt buộc !",
+                  })}
                   type="text"
                   name="updateDay"
                   className="block w-full px-4 py-2 mt-2  bg-slate-200  focus:border-emerald-400 focus:ring-emerald-300 focus:outline-none focus:ring focus:ring-opacity-40"
@@ -199,7 +263,9 @@ const AddProduct = () => {
               </label>
               <div className="flex flex-col items-start ">
                 <textarea
-                  {...register("description", {})}
+                  {...register("description", {
+                    required: "thông tin bắt buộc !",
+                  })}
                   rows={2}
                   name="description"
                   className="block w-full px-4 py-2 mt-2  bg-slate-200  focus:border-emerald-400 focus:ring-emerald-300 focus:outline-none focus:ring focus:ring-opacity-40"

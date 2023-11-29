@@ -3,6 +3,7 @@ import React, { useState, useEffect } from "react";
 import { Outlet } from "react-router-dom";
 import AddProduct from "./pages/AddProduct";
 import ComponentsHeaderHome from "./components/ComponentsHeaderHome";
+import HomePage from "./pages/HomePage";
 
 function App() {
   const [message, setMessage] = useState("");
