@@ -9,18 +9,18 @@ function App() {
   const [message, setMessage] = useState("");
 
   useEffect(() => {
-    fetch("http://localhost:6060/message")
+    fetch(`${process.env.REACT_APP_SERVER}/message`)
       .then((res) => res.json())
       .then((data) => setMessage(data.message));
   }, []);
 
   return (
     <div className="App">
-      {/* <ComponentsHeaderHome />
+      <ComponentsHeaderHome />
       <main className="pt-2 bg-slate-100 min-h-[calc(100vh)]">
         <Outlet />
-      </main> */}
-      <AddProduct />
+      </main>
+      {/* <AddProduct /> */}
 
       {/* <HomePage /> */}
       {/* <h1>{message}</h1> */}

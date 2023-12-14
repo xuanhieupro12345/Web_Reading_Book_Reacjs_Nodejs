@@ -1,6 +1,7 @@
 import React, { useState } from "react";
 import { useForm } from "react-hook-form";
 import { BsCloudUpload } from "react-icons/bs";
+import { toast } from "react-hot-toast";
 import { Link, useNavigate } from "react-router-dom";
 
 const AddProduct = () => {
@@ -23,36 +24,52 @@ const AddProduct = () => {
   });
 
   const [picture, setPicture] = useState(null);
-  const onChangePicture = (e) => {
-    setPicture(URL.createObjectURL(e.target.files[0]));
-  };
 
+  const onChangePicture = (e) => {
+    const file = e.target.files[0];
+
+    if (file) {
+      const reader = new FileReader();
+
+      reader.onloadend = () => {
+        // The result property contains the data as a base64 encoded string
+        const imageData = reader.result;
+        setPicture(imageData);
+      };
+
+      // Read the image file as a data URL
+      reader.readAsDataURL(file);
+    }
+  };
   const onSubmitForm = async (data) => {
     try {
-      const response = await fetch("http://localhost:6060/uploadProduct", {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify(data),
-      });
+      const response = await fetch(
+        `${process.env.REACT_APP_SERVER}/addupload`,
+        {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify(data),
+        }
+      );
 
       if (response.ok) {
         const responseData = await response.json();
         console.log(responseData);
-        alert(responseData.message);
+        toast.success(responseData.message); // Use toast.success for success messages
 
+        // If you want to navigate after success, you can uncomment the following lines
         if (responseData.alert) {
           navigate("/login");
         }
       } else {
         const errorData = await response.json();
-        alert.error(errorData);
-        // Handle registration error, display an error message to the user.
+        toast.error(errorData.message); // Use toast.error for error messages
       }
     } catch (error) {
       console.error(error);
-      // Handle network errors or other issues.
+      toast.error("An unexpected error occurred."); // Display a generic error message
     }
   };
 

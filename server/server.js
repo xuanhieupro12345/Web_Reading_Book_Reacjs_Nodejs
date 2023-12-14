@@ -1,4 +1,5 @@
 const express = require("express");
+require("dotenv").config();
 const fileupload = require("express-fileupload");
 const mongoose = require("mongoose");
 var cors = require("cors");
@@ -15,7 +16,7 @@ app.use(express.urlencoded({ extended: true }));
 // connect to mongodb
 mongoose.set("strictQuery", false);
 mongoose
-  .connect("mongodb://127.0.0.1:27017/mydb")
+  .connect(process.env.MONGODB_URL)
   .then(() => console.log("Connect to database!"))
   .catch((err) => console.log(err));
 
@@ -99,8 +100,8 @@ const schemaProduct = mongoose.Schema({
 
 const productModle = mongoose.model("uploadproduct", schemaProduct);
 
-// api product
-app.post("/uploadProduct", async (req, res) => {
+// api add product
+app.post("/addupload", async (req, res) => {
   const { nameBook, imageBook } = req.body;
 
   try {
@@ -132,11 +133,28 @@ app.post("/uploadProduct", async (req, res) => {
   }
 });
 
-app.get("/message", (req, res) => {
-  res.json({ message: "Hello from server!" });
+// put data
+app.get("/product", async (req, res) => {
+  const data = await productModle.find({});
+  res.send(JSON.stringify(data));
 });
-app.get("/connect", (req, res) => {
-  res.json({ message: "connect database successfully " });
+
+//delete
+app.delete("/product/:id", async (req, res) => {
+  const productId = req.params.id;
+
+  try {
+    const result = await productModle.deleteOne({ _id: productId });
+
+    if (result.deletedCount > 0) {
+      res.send({ message: "Product deleted successfully", alert: true });
+    } else {
+      res.send({ message: "Product not found", alert: false });
+    }
+  } catch (err) {
+    console.log(err);
+    res.status(500).send({ message: "An error occurred" });
+  }
 });
 
 app.listen(6060, () => {

@@ -24,7 +24,7 @@ const Signup = () => {
   // lưa dữ liệu người dùng vào data
   const onSubmitForm = async (data) => {
     try {
-      const response = await fetch("http://localhost:6060/signup", {
+      const response = await fetch(`${process.env.REACT_APP_SERVER}/signup`, {
         method: "POST",
         headers: {
           "Content-Type": "application/json",

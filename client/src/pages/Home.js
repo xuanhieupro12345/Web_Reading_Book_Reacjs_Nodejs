@@ -1,10 +1,10 @@
 import React, { useState, useEffect } from "react";
 import { Spinner } from "@material-tailwind/react";
-
+import { useParams } from "react-router-dom";
+import axios from "axios";
+import Card from "../items/Card";
 // import icon
-
 //import image
-
 import image6 from "../images/bannerButton.jpg";
 import image7 from "../images/bg-box-comic.jpg";
 import image8 from "../images/419.jpg";
@@ -17,22 +17,39 @@ import image14 from "../images/strengths-4.jpg";
 import image15 from "../images/strengths-5.jpg";
 import Buttom from "../items/Buttom";
 import ListImage from "../items/ListImage";
+import NewThisWeek from "../items/NewThisWeek";
+import CardSmall from "../items/CardSmall";
 
 const Home = () => {
-  // connect to database
-  const [test, setTest] = useState("");
+  const { id } = useParams();
+  const [productbook, setProductbook] = useState([]);
+  const [loading, setLoading] = useState(true);
 
   useEffect(() => {
-    fetch("http://localhost:6060/connect")
-      .then((res) => res.json())
-      .then((data) => setTest(data.message));
-  }, []);
+    const fetchData = async () => {
+      try {
+        const response = await axios.get(
+          `${process.env.REACT_APP_SERVER}/product`
+        );
+        if (response.data) {
+          console.log(response.data);
+          setProductbook(response.data);
+        } else {
+          console.log("Error fetching data");
+        }
+      } catch (error) {
+        console.error("Error fetching data:", error);
+      } finally {
+        setLoading(false);
+      }
+    };
+
+    fetchData();
+  }, [id]);
 
   // note
   const [note, setNote] = useState(0);
-
   const listnote = [""];
-
   // useEffect(() => {
   //   setTimeout(() => {
   //     setCurrentImageIndex((currentImageIndex) => currentImageIndex + 1);
@@ -67,27 +84,7 @@ const Home = () => {
         </button>
       </div>
 
-      {/* Mới trong tuần */}
-      <div className="w-full h-[420px] px-14 py-2 ">
-        <div className="w-full h-full shadow-lg ">
-          <div className="flex justify-between px-4">
-            <p className="pt-4 mb-2 text-xl hover:text-emerald-500 cursor-pointer">
-              Mới trong tuần
-            </p>
-            <p className="pt-5 text-emerald-600  mb-2 text-sm decoration-emerald-600 hover:underline cursor-pointer">
-              XEM TẤT CẢ
-            </p>
-          </div>
-
-          <hr className="px-6 bg-gray-100 " />
-          <div className="w-full h-full ">
-            <p className="text-center mt-20 ml-[570px]">
-              <Spinner className="h-10 w-10 text-gray-900/50" color="blue" />
-            </p>
-            <h1>{test}</h1>
-          </div>
-        </div>
-      </div>
+      <NewThisWeek />
 
       {/* BXH tháng */}
       <div className="w-full h-[420px] px-14 py-2 ">
@@ -102,10 +99,24 @@ const Home = () => {
           </div>
 
           <hr className="px-6 bg-gray-100 " />
-          <div className="w-full h-full ">
-            <p className="text-center mt-20 ml-[570px]">
-              <Spinner className="h-10 w-10 text-gray-900/50" color="blue" />
-            </p>
+          <div className="flex gap-5 overflow-scroll scroll-smooth transition-all">
+            {loading ? (
+              <p className="text-center mt-20 ml-[570px]">
+                <Spinner className="h-10 w-10 text-gray-900/50" color="blue" />
+              </p>
+            ) : (
+              productbook.map((item) => {
+                return (
+                  <Card
+                    key={item._id}
+                    imageBook={item.imageBook}
+                    nameBook={item.nameBook}
+                    author={item.author}
+                    publishing={item.publishing}
+                  />
+                );
+              })
+            )}
           </div>
         </div>
       </div>
@@ -123,10 +134,24 @@ const Home = () => {
           </div>
 
           <hr className="px-6 bg-gray-100 " />
-          <div className="w-full h-full ">
-            <p className="text-center mt-20 ml-[570px]">
-              <Spinner className="h-10 w-10 text-gray-900/50" color="blue" />
-            </p>
+          <div className="flex gap-5 overflow-scroll scroll-smooth transition-all">
+            {loading ? (
+              <p className="text-center mt-20 ml-[570px]">
+                <Spinner className="h-10 w-10 text-gray-900/50" color="blue" />
+              </p>
+            ) : (
+              productbook.map((item) => {
+                return (
+                  <Card
+                    key={item._id}
+                    imageBook={item.imageBook}
+                    nameBook={item.nameBook}
+                    author={item.author}
+                    publishing={item.publishing}
+                  />
+                );
+              })
+            )}
           </div>
         </div>
       </div>
@@ -185,10 +210,24 @@ const Home = () => {
           </div>
 
           <hr className="px-6 bg-gray-100 " />
-          <div className="w-full h-full ">
-            <p className="text-center mt-20 ml-[570px]">
-              <Spinner className="h-10 w-10 text-gray-900/50" color="blue" />
-            </p>
+          <div className="flex gap-5 overflow-scroll scroll-smooth transition-all">
+            {loading ? (
+              <p className="text-center mt-20 ml-[570px]">
+                <Spinner className="h-10 w-10 text-gray-900/50" color="blue" />
+              </p>
+            ) : (
+              productbook.map((item) => {
+                return (
+                  <CardSmall
+                    key={item._id}
+                    imageBook={item.imageBook}
+                    nameBook={item.nameBook}
+                    author={item.author}
+                    publishing={item.publishing}
+                  />
+                );
+              })
+            )}
           </div>
         </div>
       </div>
@@ -206,10 +245,24 @@ const Home = () => {
           </div>
 
           <hr className="px-6 bg-gray-100 " />
-          <div className="w-full h-full ">
-            <p className="text-center mt-20 ml-[570px]">
-              <Spinner className="h-10 w-10 text-gray-900/50" color="blue" />
-            </p>
+          <div className="flex gap-5 overflow-scroll scroll-smooth transition-all">
+            {loading ? (
+              <p className="text-center mt-20 ml-[570px]">
+                <Spinner className="h-10 w-10 text-gray-900/50" color="blue" />
+              </p>
+            ) : (
+              productbook.map((item) => {
+                return (
+                  <CardSmall
+                    key={item._id}
+                    imageBook={item.imageBook}
+                    nameBook={item.nameBook}
+                    author={item.author}
+                    publishing={item.publishing}
+                  />
+                );
+              })
+            )}
           </div>
         </div>
       </div>
