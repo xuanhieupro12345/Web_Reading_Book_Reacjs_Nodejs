@@ -157,6 +157,30 @@ app.delete("/product/:id", async (req, res) => {
   }
 });
 
+//edit
+app.put("/product/:id", async (req, res) => {
+  const productId = req.params.id;
+
+  try {
+    const result = await productModle.updateOne(
+      { _id: productId },
+      { $set: req.body }
+    );
+
+    if (result.nModified > 0) {
+      res.send({ message: "Product edited successfully", alert: true });
+    } else {
+      res.send({
+        message: "Product not found or no changes made",
+        alert: false,
+      });
+    }
+  } catch (err) {
+    console.log(err);
+    res.status(500).send({ message: "An error occurred" });
+  }
+});
+
 app.listen(6060, () => {
   console.log(`Server is running on port 6060.`);
 });

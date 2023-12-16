@@ -14,7 +14,7 @@ import qr1 from "../images/qrcode_install_app.png";
 const BuyVip = () => {
   return (
     <div>
-      <div className="flex justify-center space-x-4 py-2">
+      {/* <div className="flex justify-center space-x-4 py-2">
         <div className="flex flex-row justify-between p-3 md: px-32 px-5">
           <img
             src="https://ebook.waka.vn/themes/desktop/images/logo_waka_epay.png?v=1"
@@ -35,7 +35,7 @@ const BuyVip = () => {
             </a>
           </div>
         </div>
-      </div>
+      </div> */}
 
       <div className=" h-[600px] ">
         {/* area1*/}

@@ -38,8 +38,7 @@ const NewThisWeek = () => {
       );
 
       if (response.data.alert) {
-        // Reload the data after successful deletion
-        // fetchData();
+        alert("bạn đã xóa thành công");
       } else {
         console.log("Error deleting product");
       }
@@ -51,13 +50,49 @@ const NewThisWeek = () => {
   // const apiUrl = `${process.env.REACT_APP_SERVER}/uploadProduct`;
   // console.log(apiUrl);
 
+  const [editingProduct, setEditingProduct] = useState(null);
+  const [showEditForm, setShowEditForm] = useState(false);
+
+  const handleEdit = (productId) => {
+    const productToEdit = productbook.find((item) => item._id === productId);
+    setEditingProduct(productToEdit);
+    setShowEditForm(true);
+  };
+
+  const handleSaveEdit = async () => {
+    try {
+      // Send a PUT request to update the product on the server
+      const response = await axios.put(
+        `${process.env.REACT_APP_SERVER}/product/${editingProduct._id}`,
+        editingProduct
+      );
+
+      if (response.data.alert) {
+        // Update the productbook state with the edited product
+        setProductbook((prevProducts) =>
+          prevProducts.map((item) =>
+            item._id === editingProduct._id ? editingProduct : item
+          )
+        );
+
+        // Hide the edit form
+        setShowEditForm(false);
+        alert("Sửa thành công");
+      } else {
+        console.log("Error editing product");
+      }
+    } catch (error) {
+      console.error("Error editing product:", error);
+    }
+  };
+
   return (
     <div>
-      <div className="w-full h-[420px] px-14 py-2 ">
+      <div className="w-full h-[1550px] px-14 py-2 ">
         <div className="w-full h-full shadow-lg ">
           <div className="flex justify-between px-4">
             <p className="pt-4 mb-2 text-xl hover:text-emerald-500 cursor-pointer">
-              Mới trong tuần
+              Sách hay Nhất
             </p>
             <p className="pt-5 text-emerald-600  mb-2 text-sm decoration-emerald-600 hover:underline cursor-pointer">
               XEM TẤT CẢ
@@ -65,7 +100,7 @@ const NewThisWeek = () => {
           </div>
 
           <hr className="px-6 bg-gray-100 " />
-          <div className="flex gap-5 overflow-scroll scroll-smooth transition-all">
+          <div className=" gap-4   grid grid-cols-5  divide-x">
             {loading ? (
               <p className="text-center mt-20 ml-[570px]">
                 <Spinner className="h-10 w-10 text-gray-900/50" color="blue" />
@@ -80,12 +115,55 @@ const NewThisWeek = () => {
                     author={item.author}
                     publishing={item.publishing}
                     onDelete={() => handleDelete(item._id)}
-                    // onEdit={() => handleEdit(item._id)}
+                    onEdit={() => handleEdit(item._id)}
                   />
                 );
               })
             )}
           </div>
+          {/* Edit Form */}
+          {showEditForm && editingProduct && (
+            <div className="edit-form">
+              {/* Fields for editing */}
+              <input
+                type="text"
+                value={editingProduct.nameBook}
+                onChange={(e) =>
+                  setEditingProduct({
+                    ...editingProduct,
+                    nameBook: e.target.value,
+                  })
+                }
+              />
+              <input
+                type="text"
+                value={editingProduct.author}
+                onChange={(e) =>
+                  setEditingProduct({
+                    ...editingProduct,
+                    author: e.target.value,
+                  })
+                }
+              />
+              <input
+                type="text"
+                value={editingProduct.publishing}
+                onChange={(e) =>
+                  setEditingProduct({
+                    ...editingProduct,
+                    publishing: e.target.value,
+                  })
+                }
+              />
+              {/* Save button */}
+              <button
+                className="bg-green-600 w-[50px]"
+                onClick={handleSaveEdit}
+              >
+                Save
+              </button>
+            </div>
+          )}
         </div>
       </div>
     </div>

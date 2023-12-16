@@ -51,7 +51,7 @@ const ComponentsHeaderHome = () => {
                   </p>
                 </button>
                 <button className="bg-yellow-400 hover:bg-yellow-500 rounded-full flex items-center px-2 mr-5 text-gray-200">
-                  Gói Hội Viên{" "}
+                  <Link to="/buyvip">Gói Hội Viên </Link>
                   <p className="ml-1">
                     <RiVipCrown2Line />
                   </p>
@@ -93,7 +93,10 @@ const ComponentsHeaderHome = () => {
                 <Link to="/compilation">Tuyển Tập</Link>
               </p>
               <p className="text-gray-700 text-sm mr-7 hover:text-emerald-500 cursor-pointer">
-                <Link to="/recommendedreading">Khuyên đọc</Link>
+                <Link to="/detailbook">Chi Tiết Sách</Link>
+              </p>
+              <p className="text-gray-700 text-sm mr-7 hover:text-emerald-500 cursor-pointer ">
+                <Link to="/addproduct">Add Product</Link>
               </p>
             </div>
 

@@ -12,6 +12,9 @@ import Rankings from "./pages/Rankings";
 import HotFree from "./pages/HotFree";
 import Compilation from "./pages/Compilation";
 import RecommendedReading from "./pages/RecommendedReading";
+import AddProduct from "./pages/AddProduct";
+import BuyVip from "./pages/BuyVip ";
+import HomePage from "./pages/Detail";
 
 const root = ReactDOM.createRoot(document.getElementById("root"));
 root.render(
@@ -25,7 +28,9 @@ root.render(
         <Route path="rankings" element={<Rankings />} />
         <Route path="hotfree" element={<HotFree />} />
         <Route path="compilation" element={<Compilation />} />
-        <Route path="recommendedreading" element={<RecommendedReading />} />
+        <Route path="detailbook" element={<HomePage />} />
+        <Route path="addproduct" element={<AddProduct />} />
+        <Route path="buyvip" element={<BuyVip />} />
       </Route>
     </Routes>
   </BrowserRouter>

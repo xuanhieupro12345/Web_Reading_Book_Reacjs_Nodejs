@@ -3,6 +3,10 @@ import { Spinner } from "@material-tailwind/react";
 import { useParams } from "react-router-dom";
 import axios from "axios";
 import Card from "../items/Card";
+import Buttom from "../items/Buttom";
+import ListImage from "../items/ListImage";
+import NewThisWeek from "../items/NewThisWeek";
+import CardSmall from "../items/CardSmall";
 // import icon
 //import image
 import image6 from "../images/bannerButton.jpg";
@@ -15,10 +19,6 @@ import image12 from "../images/strengths-1.jpg";
 import image13 from "../images/strengths-2.jpg";
 import image14 from "../images/strengths-4.jpg";
 import image15 from "../images/strengths-5.jpg";
-import Buttom from "../items/Buttom";
-import ListImage from "../items/ListImage";
-import NewThisWeek from "../items/NewThisWeek";
-import CardSmall from "../items/CardSmall";
 
 const Home = () => {
   const { id } = useParams();
@@ -87,7 +87,7 @@ const Home = () => {
       <NewThisWeek />
 
       {/* BXH tháng */}
-      <div className="w-full h-[420px] px-14 py-2 ">
+      {/* <div className="w-full h-[420px] px-14 py-2 ">
         <div className="w-full h-full shadow-lg ">
           <div className="flex justify-between px-4">
             <p className="pt-4 mb-2 text-xl hover:text-emerald-500 cursor-pointer">
@@ -119,10 +119,10 @@ const Home = () => {
             )}
           </div>
         </div>
-      </div>
+      </div> */}
 
       {/* Sách mới nhất */}
-      <div className="w-full h-[420px] px-14 py-2 ">
+      {/* <div className="w-full h-[420px] px-14 py-2 ">
         <div className="w-full h-full shadow-lg ">
           <div className="flex justify-between px-4">
             <p className="pt-4 mb-2 text-xl hover:text-emerald-500 cursor-pointer">
@@ -154,7 +154,7 @@ const Home = () => {
             )}
           </div>
         </div>
-      </div>
+      </div> */}
 
       {/* Truyện tranh */}
       <div className=" py-2 w-full h-[500px] ">

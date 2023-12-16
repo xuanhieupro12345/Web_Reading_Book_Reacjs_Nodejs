@@ -6,6 +6,7 @@ import { Link, useNavigate } from "react-router-dom";
 
 const AddProduct = () => {
   const navigate = useNavigate();
+
   const {
     register,
     handleSubmit,
@@ -61,7 +62,7 @@ const AddProduct = () => {
 
         // If you want to navigate after success, you can uncomment the following lines
         if (responseData.alert) {
-          navigate("/login");
+          alert("bạn đã thêm sản phẩm thành công");
         }
       } else {
         const errorData = await response.json();

@@ -7,7 +7,7 @@ import hinh2 from "../data/image/hinh2.jpg";
 import hinh3 from "../data/image/hinh3.jpg";
 import aomong from "../data/image/aoanhvaaomong.png";
 
-function HomePage() {
+function Detail() {
   const [love, setLove] = useState(false);
   return (
     <div>
@@ -22,7 +22,7 @@ function HomePage() {
       {/* vung ket thuc cua vung lon */}
 
       {/* Vung giua lon */}
-      <div className="max-w-[1180px]  m-auto  min-w-[1100px] w-[1100px]font-sans text-[13px]  ">
+      <div className="max-w-[1180px]  m-auto  min-w-[1100px] w-[1100px]font-sans text-[13px] text-start ">
         {/* vung  row  */}
         <div className=" flex flex-wrap">
           {/* vung giua nho */}
@@ -130,11 +130,12 @@ function HomePage() {
                     </div>
                     <div className="h-7 text-primary-den font-sans text-[13px]">
                       <p className="m-0 ">Định dạng: Epub</p>
+                      <p>Nhà Xuất Bản: NXB Thế GIới</p>
                       <p>Ngày cập nhật: 19/10/2023</p>
                       <p>Gói cước áp dụng: Hội viên</p>
                     </div>
                     <div className="cursor-pointer">
-                      <p className="w-32 h-[25px] float-left text-center bg-primary-xanh text-white leading-[25px] uppercase mt-[70px] mb-[20px] rounded-[2px] ">
+                      <p className="w-32 h-[25px] float-left text-center bg-green-600 text-white leading-[25px] uppercase mt-[70px] mb-[20px] rounded-[2px] ">
                         Đọc sách
                       </p>
                     </div>
@@ -262,4 +263,4 @@ function HomePage() {
   );
 }
 
-export default HomePage;
+export default Detail;
